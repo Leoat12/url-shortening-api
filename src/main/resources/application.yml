@@ -1,0 +1,38 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/testbed?schema=url_shortening
+    username: postgres
+    password: postgres
+  redis:
+    host: 192.168.99.100
+  cache:
+    type: redis
+    redis:
+      time-to-live: 6h
+  zipkin:
+    base-url: http://192.168.99.100:9411/
+  application:
+    name: url-shortening-app
+
+application:
+  hashid-salt: "test-salt"
+  short-url-domain: "http://localhost:8080/"
+  url-range-key: "/counter/url-counter"
+  zookeeper:
+    base-url: "localhost:2181"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, httptrace
+  metrics:
+    export:
+      elastic:
+        host: http://192.168.99.100:9200
+        user-name: elastic
+        password: changeme
+        enabled: false
+
+server:
+  port: 8082

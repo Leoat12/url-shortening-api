@@ -1,0 +1,1 @@
+include::{snippets}/load-test/curl-request.adoc[]

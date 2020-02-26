@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "application.hashid-salt",
+      "type": "java.lang.String",
+      "description": "Salt used to generate hashids."
+    },
+    {
+      "name": "application.short-url-domain",
+      "type": "java.lang.String",
+      "description": "The domain for the short URL that will be appended to the hash."
+    },
+    {
+      "name": "application.zookeeper.base-url",
+      "type": "java.lang.String",
+      "description": "Base Url for the Zookeeper server."
+    },
+    {
+      "name": "application.url-range-key",
+      "type": "java.lang.String",
+      "description": "Key used to look for the url id range."
+    }
+  ] }
