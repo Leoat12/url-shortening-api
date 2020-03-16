@@ -1,0 +1,85 @@
+= URL Shortening API
+:article-author: https://dzone.com/users/4169695/sunilkrpv.html
+:article-url: https://dzone.com/articles/how-a-url-shortening-application-works
+:sectnums:
+:toc:
+:toc-title: Contents
+:description: README of the URL Shortening API
+:imagesdir: ../resources/img
+
+== Introduction
+
+This is the repository of a URL Shortening API built inspired by the architecture described by
+{article-author}[Sunil PV] in his article on {article-url}[How a URL Shortening Application Works],
+the figure below was in his article and shows well the architecture planned:
+
+image::architecture.png[]
+
+The architecture gives leeway to use any database and web framework stack to make the actual API,
+so it was chosen to use the following technologies:
+
+* *Spring Boot* for the application using Spring WebFlux.
+* *PostgreSQL* for the main database. Although the article mentions DynamoDB, a relational database is
+relatively easier to set up locally, and it was enough for the requirements, besides other aspects
+that will be explained later.
+* *Redis* for caching as stated into the architecture.
+* *Zookeeper* to maintain a distributed configuration of the atomic counter of each instance for the API.
+* The load balancer section of the architecture was abstracted, although the application is built
+as a distributed application.
+
+== Design Considerations
+
+The *Spring Boot* is used to build the API as a matter of preference and experience with the framework.
+However, this project has the intention of being educational for others and myself as well, so I used
+some modules of the Spring Framework that I was eager to experiment such as Spring WebFlux. However,
+Spring WebFlux is not used just based preference. A URL Shortening API can be expected to have a good
+amount of load, and it can benefit from a non-blocking architecture such as WebFlux. Beside WebFlux,
+other Spring are present to give the developer a wide range of possibilities of what it can do, which
+includes:
+
+* Spring Boot Actuator
+* Spring Data R2DBC (more on this later)
+* Spring Data Redis
+* Spring Cloud Sleuth (with Zipkin)
+* Spring REST Docs
+
+The modules were not used in their fullest in any way as it was intended to be experimental to see their
+capabilities.
+
+It is common knowledge that once you decide to use a non-blocking architecture like WebFlux you must
+be committed to make your application non-blocking whenever possible. One blocking call can degrade the
+benefits that the non-blocking concept brings to the table. This is where Spring Data R2DBC comes in.
+JDBC is blocking, using it would defeat the purpose of WebFlux, that is why the Spring and Pivotal has
+been working on R2DBC to bring reactive programming to relational databases. The decision to use it is because
+it goes well with Spring WebFlux and, of course, has easy integration with Spring as a whole. PostgreSQL
+has R2DBC driver and DynamoDB has no such reactive capabilities as of now.
+
+When it comes to caching solution Redis is at the top of the game, and it also brings a reactive solution
+along with Spring that checks one more box in our checklist of calls that should not be blocking, if possible.
+
+Spring Cloud Sleuth with Zipkin is used solely to test a tracing solution along with Spring and it doesn't
+make part of the original architecture. Spring Rest Docs, on the other hand, is used to document the API,
+which is simple, but it is a great idea to document it while experimenting with one more Spring module.
+
+== How It Works
+
+The application is very simple for the user, it has a `POST` method used to save a new URL and shorten it,
+and a `GET` method used to redirect the shortened URL to its long URL counterpart. Behind the scenes, though,
+the application is getting an ID for the URL, hashing it with HashId library and saving it in the database,
+if it is not cached, or it does not exist. Zookeeper coordinated the ID counter among the distributed API
+instances, giving a range of IDs to each one of them when the start or when their ranges are exhausted.
+That way, it is impossible to have duplicate IDs in the architecture, no matter how many instances there is.
+
+
+== API Documentation
+
+
+
+:operation-curl-request-title: Example Request
+operation::load-test[snippets='curl-request,http-request']
+
+== Path Parameters
+include::{snippets}/load-test/path-parameters.adoc[]
+
+== Response Body
+include::{snippets}/load-test/response-body.adoc[]

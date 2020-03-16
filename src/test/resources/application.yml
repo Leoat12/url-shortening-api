@@ -1,2 +1,4 @@
 application:
   short-url-domain: http://our-api.com
+  hashid-salt: "test-salt"
+  url-range-key: "/counter/url-counter"
