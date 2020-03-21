@@ -5,7 +5,7 @@
 :toc:
 :toc-title: Contents
 :description: README of the URL Shortening API
-:imagesdir: ./images
+:imagesdir: images
 
 == Introduction
 
