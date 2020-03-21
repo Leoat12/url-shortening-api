@@ -73,13 +73,31 @@ That way, it is impossible to have duplicate IDs in the architecture, no matter 
 
 == API Documentation
 
+=== Generate Short URL
+
+This is the endpoint used to generate a short URL given the long URL and an
+optional `expiryAt` date.
+
+==== Request Body
+
+include::{snippets}/generate-short-url/request-body.adoc[]
+
+include::{snippets}/generate-short-url/request-fields.adoc[]
+
+==== Request Response
+
+An example of a response is as follows:
+
+include::{snippets}/generate-short-url/response-body.adoc[]
+
+include::{snippets}/generate-short-url/response-fields.adoc[]
+
+Try the request with this cURL!
+
+include::{snippets}/generate-short-url/curl-request.adoc[]
+
+=== Redirect to the long URL given a short URL
 
 
-:operation-curl-request-title: Example Request
-operation::load-test[snippets='curl-request,http-request']
 
-== Path Parameters
-include::{snippets}/load-test/path-parameters.adoc[]
 
-== Response Body
-include::{snippets}/load-test/response-body.adoc[]

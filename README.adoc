@@ -1,6 +1,7 @@
 = URL Shortening API
 :article-author: https://dzone.com/users/4169695/sunilkrpv.html
 :article-url: https://dzone.com/articles/how-a-url-shortening-application-works
+:api-doc-url: https://google.com
 :sectnums:
 :toc:
 :toc-title: Contents
@@ -69,6 +70,10 @@ the application is getting an ID for the URL, hashing it with HashId library and
 if it is not cached, or it does not exist. Zookeeper coordinated the ID counter among the distributed API
 instances, giving a range of IDs to each one of them when the start or when their ranges are exhausted.
 That way, it is impossible to have duplicate IDs in the architecture, no matter how many instances there is.
+
+== API Documentation
+
+More information can be found on the {api-doc-url}[API Documentation].
 
 
 
