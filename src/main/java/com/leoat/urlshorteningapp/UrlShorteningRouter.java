@@ -18,8 +18,6 @@ public class UrlShorteningRouter {
     public RouterFunction<ServerResponse> route(UrlInfoHandler handler, ErrorHandler errorHandler) {
         return RouterFunctions.route()
                 .onError(Exception.class, errorHandler::handleError)
-                .GET("/test/{url}", handler::loadTest)
-                .GET("/test2/{url}", handler::loadTest2)
                 .GET("/{url}", handler::findLongUrlAndRedirect)
                 .POST("/", accept(MediaType.APPLICATION_JSON), handler::generateAndSaveShortUrl)
                 .build();

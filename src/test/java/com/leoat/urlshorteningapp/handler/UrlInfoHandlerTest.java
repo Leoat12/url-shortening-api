@@ -7,7 +7,6 @@ import com.leoat.urlshorteningapp.model.UrlGenerateRequest;
 import com.leoat.urlshorteningapp.model.UrlInfo;
 import com.leoat.urlshorteningapp.service.CacheService;
 import com.leoat.urlshorteningapp.service.UrlInfoService;
-import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,7 +23,6 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -84,42 +82,6 @@ public class UrlInfoHandlerTest {
                         .withRequestDefaults(prettyPrint())
                         .withResponseDefaults(prettyPrint()))
                 .build();
-    }
-
-    @Test
-    public void shouldReturnOkOnTestEndpoint() {
-        doReturn(Mono.just(urlInfo())).when(cacheService)
-                .getFromCacheOrSupplier(eq("AA"), eq(UrlInfo.class), any(Supplier.class));
-
-        String shortUrl = environment.getProperty("application.short-url-domain") + "/" + urlInfo().getShortUrl();
-
-        this.webTestClient.get().uri("/test/{url}", "AA").exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("shortUrl").isEqualTo(shortUrl)
-                .consumeWith(document("load-test",
-                        pathParameters(
-                                parameterWithName("url").description("The hash representing the short URL.")
-                        )));
-    }
-
-    @Test
-    public void shouldReturnOkOnTestEndpoint2() {
-        UrlInfo urlInfo = urlInfo();
-        urlInfo.setLongUrl(String.format("http://localhost:%d", mockWebServer.getPort()));
-
-        doReturn(Mono.just(urlInfo)).when(cacheService)
-                .getFromCacheOrSupplier(eq("AA"), eq(UrlInfo.class), any(Supplier.class));
-
-        mockWebServer.enqueue(new MockResponse().setBody("Response"));
-
-        this.webTestClient.get().uri("/test2/{url}", "AA").exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class).isEqualTo("Response")
-                .consumeWith(document("load-test-2",
-                        pathParameters(
-                                parameterWithName("url").description("The hash representing the short URL.")
-                        )));
     }
 
     @Test

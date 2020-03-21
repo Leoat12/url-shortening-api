@@ -98,6 +98,21 @@ include::{snippets}/generate-short-url/curl-request.adoc[]
 
 === Redirect to the long URL given a short URL
 
+To redirect to the long URL given a short URL is very simple, the same process as
+most of the url shortening apps out there.
 
+include::{snippets}/redirect-long-url/curl-request.adoc[]
 
+Just append the hash code representing the URL and you are good to go:
+
+include::{snippets}/redirect-long-url/path-parameters.adoc[]
+
+It will immediately redirect once it is done finding the URL, if it is not found,
+it will return a 404 status.
+
+== Improvements and Contributions
+
+Although it is a kind of educational project made to learn new technologies in a
+fun and useful way (want your own short urls, anyone?), the code is opened for
+improvements!
 

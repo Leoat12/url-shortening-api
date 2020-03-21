@@ -34,24 +34,6 @@ public class UrlInfoHandler {
     private final CacheService cacheService;
     private final WebClient webClient;
 
-    public Mono<ServerResponse> loadTest(ServerRequest serverRequest) {
-        String shortUrl = serverRequest.pathVariable("url");
-        return cacheService.getFromCacheOrSupplier(shortUrl, UrlInfo.class, () -> urlInfoService.findByShortUrl(shortUrl))
-                .doOnNext(urlInfo -> log.info("UrlInfo found: {}", urlInfo))
-                .flatMap(urlInfo -> ok().bodyValue(appendUrlDomain(urlInfo)))
-                .switchIfEmpty(status(HttpStatus.NOT_FOUND)
-                        .bodyValue(ErrorResponse.notFound(shortUrl, ErrorCode.URL_INFO_NOT_FOUND)));
-    }
-
-    public Mono<ServerResponse> loadTest2(ServerRequest serverRequest) {
-        String shortUrl = serverRequest.pathVariable("url");
-        return cacheService.getFromCacheOrSupplier(shortUrl, UrlInfo.class, () -> urlInfoService.findByShortUrl(shortUrl))
-                .doOnNext(urlInfo -> log.info("UrlInfo found: {}", urlInfo))
-                .flatMap(urlInfo -> ok().body(webClient.get().uri(urlInfo.getLongUrl()).retrieve().bodyToMono(String.class), String.class))
-                .switchIfEmpty(status(HttpStatus.NOT_FOUND)
-                        .bodyValue(ErrorResponse.notFound(shortUrl, ErrorCode.URL_INFO_NOT_FOUND)));
-    }
-
     public Mono<ServerResponse> findLongUrlAndRedirect(ServerRequest serverRequest) {
         String shortUrl = serverRequest.pathVariable("url");
         return cacheService.getFromCacheOrSupplier(shortUrl, UrlInfo.class, () -> urlInfoService.findByShortUrl(shortUrl))
