@@ -8,11 +8,12 @@
 :description: README of the URL Shortening API
 :imagesdir: ./src/main/resources/img
 
+image::https://travis-ci.org/Leoat12/url-shortening-api.svg?branch=master[]
+
 == Introduction
 
 This is the repository of a URL Shortening API built inspired by the architecture described by
-{article-author}[Sunil PV] in his article on {article-url}[How a URL Shortening Application Works],
-the figure below was in his article and shows well the architecture planned:
+{article-author}[Sunil PV] in his article on {article-url}[How a URL Shortening Application Works], the figure below was in his article and shows well the architecture planned:
 
 image::architecture.png[]
 
