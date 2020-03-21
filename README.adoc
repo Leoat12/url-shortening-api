@@ -65,15 +65,18 @@ which is simple, but it is a great idea to document it while experimenting with 
 == How It Works
 
 The application is very simple for the user, it has a `POST` method used to save a new URL and shorten it,
-and a `GET` method used to redirect the shortened URL to its long URL counterpart. Behind the scenes, though,
-the application is getting an ID for the URL, hashing it with HashId library and saving it in the database,
-if it is not cached, or it does not exist. Zookeeper coordinated the ID counter among the distributed API
-instances, giving a range of IDs to each one of them when the start or when their ranges are exhausted.
+and a `GET` method used to redirect the shortened URL to its long URL counterpart.
+Behind the scenes, though, the application is getting an ID for the URL, hashing it with HashId library and saving it in the database, if it is not cached, or it does not exist.
+Zookeeper coordinated the ID counter among the distributed API instances, giving a range of IDs to each one of them when the start or when their ranges are exhausted.
 That way, it is impossible to have duplicate IDs in the architecture, no matter how many instances there is.
 
 == API Documentation
 
 More information can be found on the {api-doc-url}[API Documentation].
+
+== To be done
+
+The idea right now is to make a docker-compose.yml file so that it can be runnable anywhere with Docker without having to lift from ground up all its dependencies.
 
 
 
