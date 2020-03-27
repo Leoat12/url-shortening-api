@@ -1,0 +1,54 @@
+version: '3'
+services:
+  postgresql:
+    container_name: postgressql
+    image: postgres:10.12-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - urlapi
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - 6379
+    restart: always
+    networks:
+      - urlapi
+
+  zookeeper:
+    container_name: zookeeper
+    image: zookeeper
+    ports:
+      - 2181
+    restart: always
+    networks:
+      - urlapi
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: './target/url-shortening-app-1.0.0.jar'
+    environment:
+      SPRING_PROFILES_ACTIVE: $SPRING_PROFILE
+    image: urlapi
+    ports:
+      - 8082:8082
+    networks:
+      - urlapi
+    depends_on:
+      - zookeeper
+      - redis
+      - postgresql
+
+networks:
+  urlapi:
+    driver: bridge

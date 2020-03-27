@@ -75,9 +75,4 @@ That way, it is impossible to have duplicate IDs in the architecture, no matter 
 
 More information can be found on the {api-doc-url}[API Documentation].
 
-== To be done
-
-The idea right now is to make a docker-compose.yml file so that it can be runnable anywhere with Docker without having to lift from ground up all its dependencies.
-
-
 

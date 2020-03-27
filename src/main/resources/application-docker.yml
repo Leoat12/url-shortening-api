@@ -1,10 +1,10 @@
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/testbed?schema=url_shortening
+    url: r2dbc:postgresql://postgresql:5432/postgres?schema=url_shortening
     username: postgres
     password: postgres
   redis:
-    host: 192.168.99.100
+    host: redis
   cache:
     type: redis
     redis:
@@ -17,10 +17,10 @@ spring:
 
 application:
   hashid-salt: "test-salt"
-  short-url-domain: "http://localhost:8080/"
+  short-url-domain: "http://localhost:8082/"
   url-range-key: "/counter/url-counter"
   zookeeper:
-    base-url: "localhost:2181"
+    base-url: "zookeeper:2181"
 
 management:
   endpoints:
