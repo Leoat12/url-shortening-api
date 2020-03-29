@@ -16,9 +16,6 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 @EnableCaching
 @SpringBootApplication
@@ -51,11 +48,6 @@ public class UrlShorteningAppApplication {
     @Bean
     public HttpTraceRepository httpTraceRepository() {
         return new InMemoryHttpTraceRepository();
-    }
-
-    @Bean
-    public WebClient webClient() {
-        return WebClient.create();
     }
 
     @Bean

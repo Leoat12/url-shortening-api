@@ -13,14 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyExtractors;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
-import static org.springframework.web.reactive.function.server.ServerResponse.*;
+import static org.springframework.web.reactive.function.server.ServerResponse.permanentRedirect;
+import static org.springframework.web.reactive.function.server.ServerResponse.status;
 
 @Slf4j
 @Component
@@ -32,7 +32,6 @@ public class UrlInfoHandler {
 
     private final UrlInfoService urlInfoService;
     private final CacheService cacheService;
-    private final WebClient webClient;
 
     public Mono<ServerResponse> findLongUrlAndRedirect(ServerRequest serverRequest) {
         String shortUrl = serverRequest.pathVariable("url");

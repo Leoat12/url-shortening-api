@@ -1,5 +1,6 @@
 package com.leoat.urlshorteningapp.service;
 
+import com.leoat.urlshorteningapp.exception.NotAbleToUpdateCounterException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.shared.SharedCount;
@@ -38,7 +39,7 @@ public class ZookeeperSharedConfigurationService implements SharedConfigurationS
             return counter.getValue();
         } catch (Exception e) {
             log.error("Error while starting shared counter, impossible to update counter.", e);
-            throw new RuntimeException();
+            throw new NotAbleToUpdateCounterException();
         }
     }
 }
