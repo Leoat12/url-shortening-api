@@ -194,7 +194,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                ${project.basedir}/docs
+                                ${project.build.outputDirectory}/resources/static/docs
                             </outputDirectory>
                             <resources>
                                 <resource>

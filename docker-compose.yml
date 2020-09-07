@@ -1,4 +1,4 @@
-version: '3'
+version: '2.2'
 services:
   postgresql:
     container_name: postgressql
@@ -39,9 +39,13 @@ services:
         JAR_FILE: './target/url-shortening-app-1.0.0.jar'
     environment:
       SPRING_PROFILES_ACTIVE: $SPRING_PROFILE
+      JAVA_OPTS: $JAVA_OPTS
     image: urlapi
+    cpus: 1
+    mem_limit: 756000000
     ports:
       - 8082:8082
+      - 6001:6001
     networks:
       - urlapi
     depends_on:
